@@ -13,7 +13,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
      
         super(MainWindow, self).__init__()
-        self.currentPath = os.getcwd()
+        self.currentPath = os.getcwd().replace('\\', '/')
         uic.loadUi(self.currentPath + '/AnimeSearcher.ui', self)
         #sys.setrecursionlimit(10000)
 
@@ -34,7 +34,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.resized.connect(self.resizeWindowAction)
 
         # Set background image:
-        oImage = QImage(self.currentPath + "/AnimeSearcherImages/background1.jpg")
+        self.currentBackground = self.currentPath + "/AnimeSearcherImages/" + 'background9.jpg'
+        oImage = QImage(self.currentBackground)
         sImage = oImage.scaled(QSize(1126,704))                   # resize Image to widgets size
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(sImage))                        
@@ -45,18 +46,27 @@ class MainWindow(QtWidgets.QMainWindow):
         #self.steticImage.setStyleSheet("background-image : url(C:/Users/Usuario/Desktop/Informática/Programacion/GitHub/AnimeSearcher/AnimeSearcherImages/banner.jpg); border : 2px solid blue") 
 
         #MainWindow.setStyleSheet("background-image: url(AnimeSearcher/background.jpg)")
-        self.checkedOps = set()
-        
+        self.checkedOps = set()  
         self.openInBrowser()
+
+        """
+        if True:
+            import threading
+            event = threading.Event()
+            event.set()
+            thread = threading.Thread(target=self.variantBackground, args=(event,))
+            thread.start()
+        """
+            
 
 
     def resizeEvent(self, event):
         self.resized.emit()
         return super(MainWindow, self).resizeEvent(event)
 
-    
+
     def resizeWindowAction(self):
-        oImage = QImage(self.currentPath + "/AnimeSearcherImages/background1.jpg")
+        oImage = QImage(self.currentBackground)
         sImage = oImage.scaled(QSize(self.width(), self.height()))                   # resize Image to widgets size
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(sImage))                        
@@ -73,7 +83,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.checkedOps.add('https://tioanime.com')
 
     def monoschinosChecked(self):
-        self.checkedOps.add('https://monoschinos.com')
+        self.checkedOps.add('https://monoschinos2.com')
 
 
     def typeOfSearch(self):
@@ -174,7 +184,7 @@ class MainWindow(QtWidgets.QMainWindow):
         elif platform == 'https://tioanime.com': # Param for tioanime
             param = '/directorio?q='
 
-        elif platform == 'https://monoschinos.com': # Param for monoschinos
+        elif platform == 'https://monoschinos2.com': # Param for monoschinos
             param = '/search?q='
 
 
@@ -201,6 +211,25 @@ class MainWindow(QtWidgets.QMainWindow):
             self.urls.append(url)
             print('Añadido a la lista.')
 
+
+
+    def variantBackground(self, event):
+        from time import sleep
+
+        sleepTime = 60
+        path = self.currentPath + '/AnimeSearcherImages/'
+        backgrounds = os.listdir(path)
+
+        # Constantly change the background
+        while True:
+            for image in backgrounds:
+                self.currentPath = path + image
+                self.resizeWindowAction()
+                event.wait(sleepTime)
+                
+        
+
+            
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
