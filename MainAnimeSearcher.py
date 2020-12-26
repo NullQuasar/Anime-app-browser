@@ -152,16 +152,16 @@ class MainWindow(QtWidgets.QMainWindow):
         found = False
         for i in parameters:
             
-            url = url[:index] + '-' + i + url[index:]
-            print('Probando ' + url)
+            newQuery = url[:index] + '-' + i + url[index:]
+            print('Probando ' + newQuery)
 
-            if requests.get(url).status_code == 404:
+            if requests.get(newQuery).status_code == 404:
                 print('Pagina no encontrada.')
                 print('Probando siguiente parametro...')
 
             else:
-                print('Encontrado: ' + url)
-                self.anime = url
+                print('Encontrado: ' + newQuery)
+                self.anime = newQuery
                 self.SearchByEpisode(platform)
                 found = True
                 break
