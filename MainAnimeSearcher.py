@@ -1,12 +1,16 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtGui import QImage, QPalette, QBrush
-from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QMessageBox
 import os
 import re
-import urllib.parse
-import requests
 import sys
+import urllib.parse
+
+import requests
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QBrush, QImage, QPalette
+from PyQt5.QtWidgets import QMessageBox
+
+
+#sys.stderr = open('error_log.txt', 'a') set stderr custom output file
 
 class MainWindow(QtWidgets.QMainWindow):
     resized = QtCore.pyqtSignal()
@@ -30,11 +34,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.animefenixOp.stateChanged.connect(self.animefenixChecked)
         self.tioanimeOp.stateChanged.connect(self.tioanimeChecked)
         self.monoschinosOp.stateChanged.connect(self.monoschinosChecked)
+
         self.searchButton.clicked.connect(self.setQuery)
         self.resized.connect(self.resizeWindowAction)
 
         # Set background image:
-        self.currentBackground = self.currentPath + "/AnimeSearcherImages/" + 'background9.jpg'
+        self.currentBackground = self.currentPath + "/AnimeSearcherImages/" + 'background5.jpg'
         oImage = QImage(self.currentBackground)
         sImage = oImage.scaled(QSize(1126,704))                   # resize Image to widgets size
         palette = QPalette()
@@ -72,18 +77,37 @@ class MainWindow(QtWidgets.QMainWindow):
         palette.setBrush(QPalette.Window, QBrush(sImage))                        
         self.setPalette(palette)
 
+        # Center items
+        from PyQt5.QtWidgets import QDesktopWidget
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
 
     def animeflvChecked(self):
-        self.checkedOps.add('https://www3.animeflv.net')
+        if self.animeflvOp.isChecked(): 
+            self.checkedOps.add('https://www3.animeflv.net')
+        else:
+            self.checkedOps.remove('https://www3.animeflv.net')
 
     def animefenixChecked(self):
-        self.checkedOps.add('https://www.animefenix.com')
+        if self.animefenixOp.isChecked():
+            self.checkedOps.add('https://www.animefenix.com')
+        else:
+            self.checkedOps.remove('https://www.animefenix.com')
 
     def tioanimeChecked(self):
-        self.checkedOps.add('https://tioanime.com')
+        if self.tioanimeOp.isChecked():
+            self.checkedOps.add('https://tioanime.com')
+        else:
+            self.checkedOps.remove('https://tioanime.com')
 
     def monoschinosChecked(self):
-        self.checkedOps.add('https://monoschinos2.com')
+        if self.monoschinosOp.isChecked():
+            self.checkedOps.add('https://monoschinos2.com')
+        else:
+            self.checkedOps.remove('https://monoschinos2.com')
 
 
     def typeOfSearch(self):
@@ -109,6 +133,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.openBrowser.isChecked():
             for p in self.urls:
                 os.system('start ' + p)
+                print('Open in browser > ' + p)
 
     def setQuery(self):
         print('Debug! ', self.checkedOps)
@@ -135,6 +160,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.typeOfSearch()
             self.openInBrowser()
 
+
     def isEpisode(self):
         # Determinar tipo de busqueda (consulta o capitulo)
         if len(self.cap) == 0:
@@ -145,7 +171,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     # If the self.anime is not found it probes some common parameters like tv and hd
-    def ProbeOtherParameters(self, url):
+    def ProbeOtherParameters(self, url, p):
         parameters = ['tv', 'hd']
 
         index = url.find('-' + self.cap)
@@ -161,10 +187,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
             else:
                 print('Encontrado: ' + newQuery)
-                self.anime = newQuery
-                self.SearchByEpisode(platform)
+                self.Results.addItem(QtWidgets.QListWidgetItem(newQuery))
+                self.urls.append(newQuery)
+                print('Añadido a la lista.')
                 found = True
-                break
+                return
         
         if not found:
             print('Anime o capitulo no encontrado')
@@ -204,7 +231,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if requests.get(url).status_code == 404:
             print('Pagina no encontrada.')
             print('Probando con otros parametros...')
-            self.ProbeOtherParameters(url)
+            self.ProbeOtherParameters(url, platform)
             
         else:
             self.Results.addItem(QtWidgets.QListWidgetItem(url))
