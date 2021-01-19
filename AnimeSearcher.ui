@@ -10,8 +10,21 @@
     <height>704</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-radius: 10px;
+color: white;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
@@ -32,8 +45,8 @@
        <colorrole role="WindowText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>0</red>
-          <green>85</green>
+          <red>255</red>
+          <green>255</green>
           <blue>255</blue>
          </color>
         </brush>
@@ -42,7 +55,16 @@
         <brush brushstyle="SolidPattern">
          <color alpha="255">
           <red>255</red>
-          <green>85</green>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
           <blue>255</blue>
          </color>
         </brush>
@@ -61,8 +83,8 @@
        <colorrole role="WindowText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>0</red>
-          <green>85</green>
+          <red>255</red>
+          <green>255</green>
           <blue>255</blue>
          </color>
         </brush>
@@ -71,7 +93,16 @@
         <brush brushstyle="SolidPattern">
          <color alpha="255">
           <red>255</red>
-          <green>85</green>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
           <blue>255</blue>
          </color>
         </brush>
@@ -90,18 +121,27 @@
        <colorrole role="WindowText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>120</red>
-          <green>120</green>
-          <blue>120</blue>
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Text">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>120</red>
-          <green>120</green>
-          <blue>120</blue>
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -119,10 +159,14 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>9</pointsize>
+      <family>Segoe UI Black</family>
+      <pointsize>11</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="toolTip">
+     <string>Type your anime episode!</string>
     </property>
     <property name="title">
      <string/>
@@ -135,54 +179,20 @@
       <rect>
        <x>60</x>
        <y>170</y>
-       <width>111</width>
+       <width>121</width>
        <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TioAnime.com</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="SearchInput">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>60</y>
-       <width>251</width>
-       <height>31</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Candara Light</family>
-       <pointsize>13</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="statusTip">
-      <string/>
-     </property>
-     <property name="accessibleName">
-      <string/>
-     </property>
-     <property name="accessibleDescription">
-      <string/>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhNone</set>
-     </property>
-     <property name="cursorWidth">
-      <number>1</number>
-     </property>
-     <property name="placeholderText">
-      <string>Search anime!</string>
+     <property name="text">
+      <string>TioAnime.com</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="animeflvOp">
@@ -194,6 +204,14 @@
        <height>21</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="text">
       <string>Animeflv.net</string>
      </property>
@@ -203,9 +221,17 @@
       <rect>
        <x>60</x>
        <y>140</y>
-       <width>121</width>
+       <width>131</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>Animefenix.com</string>
@@ -219,6 +245,14 @@
        <width>141</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>Monoschinos.com</string>
@@ -236,7 +270,25 @@
      <property name="palette">
       <palette>
        <active>
-        <colorrole role="Light">
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="ButtonText">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
            <red>255</red>
@@ -248,15 +300,42 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>85</red>
-           <green>85</green>
-           <blue>127</blue>
+           <red>0</red>
+           <green>120</green>
+           <blue>215</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="PlaceholderText">
+         <brush brushstyle="NoBrush">
+          <color alpha="128">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
        </active>
        <inactive>
-        <colorrole role="Light">
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="ButtonText">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
            <red>255</red>
@@ -268,15 +347,42 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>85</red>
-           <green>85</green>
-           <blue>127</blue>
+           <red>0</red>
+           <green>120</green>
+           <blue>215</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="PlaceholderText">
+         <brush brushstyle="NoBrush">
+          <color alpha="128">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
        </inactive>
        <disabled>
-        <colorrole role="Light">
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="ButtonText">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
            <red>255</red>
@@ -294,8 +400,25 @@
           </color>
          </brush>
         </colorrole>
+        <colorrole role="PlaceholderText">
+         <brush brushstyle="NoBrush">
+          <color alpha="128">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
        </disabled>
       </palette>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
@@ -309,20 +432,8 @@
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="midLineWidth">
-      <number>0</number>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::NoSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectItems</enum>
+     <property name="styleSheet">
+      <string notr="true">border: 2px solid purple;</string>
      </property>
      <property name="flow">
       <enum>QListView::TopToBottom</enum>
@@ -342,20 +453,20 @@
       <rect>
        <x>60</x>
        <y>240</y>
-       <width>581</width>
+       <width>81</width>
        <height>31</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>MS-Gothic-Mod</family>
-       <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; font-style:italic; color:#ff0c38;&quot;&gt;Result/&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-style:italic; color:#ff1e65;&quot;&gt;Result/&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QRadioButton" name="openBrowser">
@@ -366,12 +477,23 @@
       <rect>
        <x>350</x>
        <y>60</y>
-       <width>131</width>
+       <width>141</width>
        <height>21</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px solid red;</string>
      </property>
      <property name="text">
       <string>Open in browser</string>
@@ -389,10 +511,73 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;
+border: 2px solid darkgreen;
+background-color:lightgreen;
+color: #111111;</string>
+     </property>
      <property name="text">
       <string>&gt;</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="SearchInput">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>60</y>
+       <width>211</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Black</family>
+       <pointsize>15</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Type your anime episode!</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:10px;
+border: 2px solid blue;
+color: rgb(77, 77, 77);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Search anime/s!</string>
+     </property>
+    </widget>
+    <widget class="QFontComboBox" name="fontComboBox">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>520</y>
+       <width>188</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 20px;
+color: black;</string>
+     </property>
+    </widget>
+    <zorder>SearchInput</zorder>
+    <zorder>tioanimeOp</zorder>
+    <zorder>animeflvOp</zorder>
+    <zorder>animefenixOp</zorder>
+    <zorder>monoschinosOp</zorder>
+    <zorder>Results</zorder>
+    <zorder>resultLabel</zorder>
+    <zorder>openBrowser</zorder>
+    <zorder>searchButton</zorder>
+    <zorder>fontComboBox</zorder>
    </widget>
    <widget class="QLabel" name="steticImage">
     <property name="geometry">
@@ -402,6 +587,12 @@
       <width>451</width>
       <height>591</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
