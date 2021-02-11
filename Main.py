@@ -1,13 +1,10 @@
-import os
-import re
-import sys
-import urllib.parse
-
+import os, sys, re
 import requests
+
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QBrush, QImage, QPalette
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QFileDialog
 
 
 #sys.stderr = open('error_log.txt', 'a') set stderr custom output file
@@ -18,6 +15,8 @@ class MainWindow(QtWidgets.QMainWindow):
      
         super(MainWindow, self).__init__()
         self.currentPath = os.getcwd().replace('\\', '/')
+        self.backgrounds_path = self.currentPath + "/AnimeSearcherImages/"
+
         uic.loadUi(self.currentPath + '/AnimeSearcher.ui', self)
         #sys.setrecursionlimit(10000)
 
@@ -37,14 +36,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.searchButton.clicked.connect(self.setQuery)
         self.resized.connect(self.resizeWindowAction)
+        self.change_bg.installEventFilter(self)
 
         # Set background image:
-        self.currentBackground = self.currentPath + "/AnimeSearcherImages/" + 'background5.jpg'
-        oImage = QImage(self.currentBackground)
-        sImage = oImage.scaled(QSize(1126,704))                   # resize Image to widgets size
-        palette = QPalette()
-        palette.setBrush(QPalette.Window, QBrush(sImage))                        
-        self.setPalette(palette)
+        self.make_background_folder()
+        self.image_index = 0
+        self.currentBackground = self.backgrounds_path + 'background5.jpg'
+        self.set_background()
+
 
         # Set banner image:
         #bannerImage = self.currentPath + '/AnimeSearcherImages/banner.jpg'
@@ -64,6 +63,14 @@ class MainWindow(QtWidgets.QMainWindow):
         """
             
 
+    def make_background_folder(self):
+        self.files = os.listdir(self.backgrounds_path)
+        images = len(self.files)
+        for x in range(images):
+            c_image = self.backgrounds_path + self.files[x]
+            os.system('mv {} {}background{}.{}'.format(c_image, self.backgrounds_path, str(x+1), c_image[c_image.rfind('.')+1:]))
+
+
 
     def resizeEvent(self, event):
         self.resized.emit()
@@ -71,11 +78,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def resizeWindowAction(self):
-        oImage = QImage(self.currentBackground)
-        sImage = oImage.scaled(QSize(self.width(), self.height()))                   # resize Image to widgets size
-        palette = QPalette()
-        palette.setBrush(QPalette.Window, QBrush(sImage))                        
-        self.setPalette(palette)
+        self.set_background(self.width(), self.height())
 
         # Center items
         from PyQt5.QtWidgets import QDesktopWidget
@@ -83,6 +86,14 @@ class MainWindow(QtWidgets.QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+
+    def set_background(self, dx=1126, dy=704):
+        oImage = QImage(self.currentBackground)
+        sImage = oImage.scaled(QSize(dx, dy))                   # resize Image to widgets size
+        palette = QPalette()
+        palette.setBrush(QPalette.Window, QBrush(sImage))                        
+        self.setPalette(palette)
 
 
     def animeflvChecked(self):
@@ -144,7 +155,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.cap = ''
 
         clearList()
+
         self.anime = self.SearchInput.text()
+        self.anime = re.sub('[^A-Za-z0-9 ]+', ' ', self.anime)
+        self.anime = re.sub(' +', ' ', self.anime)
+        print(self.anime)
             
         # Verify input
         if self.anime == '':
@@ -160,7 +175,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             def setCap(name):
                 nums = re.findall(r'\d+', name)
-                if len(nums) > 0:
+                if len(nums) > 0 and not name.startswith(''.join(nums)):
                     self.cap = nums[len(nums)-1]
 
 
@@ -215,6 +230,13 @@ class MainWindow(QtWidgets.QMainWindow):
         
         if not found:
             print('Anime o capitulo no encontrado')
+            msg = QMessageBox()
+            msg.setWindowTitle('Not found')
+            msg.setText('Anime or anime episode not found! :(')
+            msg.setIcon(QMessageBox.Critical)
+
+            x = msg.exec_()
+
 
 
 
@@ -260,7 +282,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 
-    def variantBackground(self, event):
+    """ def variantBackground(self, event):
         from time import sleep
 
         sleepTime = 60
@@ -272,9 +294,53 @@ class MainWindow(QtWidgets.QMainWindow):
             for image in backgrounds:
                 self.currentPath = path + image
                 self.resizeWindowAction()
-                event.wait(sleepTime)
+                event.wait(sleepTime) """
                 
-        
+
+
+    def prev_background(self):
+        self.image_index -= 1
+        if self.image_index <= 0:
+            self.image_index = len(self.files) - 1
+
+        self.currentBackground = self.backgrounds_path + self.files[self.image_index]
+        self.set_background()
+
+    def next_background(self):
+        self.image_index += 1
+        if self.image_index >= len(self.files):
+            self.image_index = 0
+
+        self.currentBackground = self.backgrounds_path + self.files[self.image_index]
+        self.set_background()
+
+    def custom_background(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file', self.currentPath, 'Images (*.jpg *.jpeg *.png *.gif *.jfif *.bmp)')
+
+        if os.path.isfile(fname[0]):
+            self.currentBackground = fname[0]
+            self.set_background()
+
+            print('Selected file > ', fname)
+
+
+    def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.MouseButtonPress:
+
+            if event.button() == QtCore.Qt.LeftButton:
+                print(obj.objectName(), "Left click")
+                self.prev_background()
+
+            elif event.button() == QtCore.Qt.RightButton:
+                print(obj.objectName(), "Right click")
+                self.next_background()
+
+            elif event.button() == QtCore.Qt.MiddleButton:
+                print(obj.objectName(), "Middle click")
+                self.custom_background()
+
+        self.resizeWindowAction()
+        return QtCore.QObject.event(obj, event)
 
             
 
