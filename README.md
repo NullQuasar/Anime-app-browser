@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 "# Anime browser" 
 
-Anime-app-browser is a tool for desktop used for search animes and animes episodes
+Simple anime app browser to search anime in multiple web platforms
 =======
 *# Anime browser*
 
