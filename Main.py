@@ -65,7 +65,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def make_background_folder(self):
         self.files = os.listdir(self.backgrounds_path)
-        print(self.files)
         # There is an error, rename files even while they are already named, and the order make the program to delete some files in the process
         images = len(self.files)
         for x in range(images):
@@ -217,22 +216,22 @@ class MainWindow(QtWidgets.QMainWindow):
         for i in parameters:
             
             newQuery = url[:index] + '-' + i + url[index:]
-            print('Probando ' + newQuery)
+            print('Trying ' + newQuery)
 
             if requests.get(newQuery).status_code == 404:
-                print('Pagina no encontrada.')
-                print('Probando siguiente parametro...')
+                print('Page not found.')
+                print('Trying other parameters...')
 
             else:
                 print('Encontrado: ' + newQuery)
                 self.Results.addItem(QtWidgets.QListWidgetItem(newQuery))
                 self.urls.append(newQuery)
-                print('Añadido a la lista.')
+                print('Added to the list.')
                 found = True
                 return
         
         if not found:
-            print('Anime o capitulo no encontrado')
+            print('Anime or anime episode not found')
             msg = QMessageBox()
             msg.setWindowTitle('Not found')
             msg.setText('Anime or anime episode not found! :(')
@@ -264,7 +263,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.Results.addItem(QtWidgets.QListWidgetItem(url))
         self.urls.append(url)
-        print('Añadido a la lista.')
+        print('Added to the list.')
 
 
 
@@ -274,14 +273,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         print(requests.get(url).status_code) # Debug
         if requests.get(url).status_code == 404:
-            print('Pagina no encontrada.')
-            print('Probando con otros parametros...')
+            print('Page not found.')
+            print('Trying other parameters...')
             self.ProbeOtherParameters(url, platform)
             
         else:
             self.Results.addItem(QtWidgets.QListWidgetItem(url))
             self.urls.append(url)
-            print('Añadido a la lista.')
+            print('Added to the list.')
 
 
 
