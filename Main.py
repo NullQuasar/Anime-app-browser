@@ -65,11 +65,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def make_background_folder(self):
         self.files = os.listdir(self.backgrounds_path)
+        print(self.files)
+        # There is an error, rename files even while they are already named, and the order make the program to delete some files in the process
         images = len(self.files)
         for x in range(images):
             c_image = self.backgrounds_path + self.files[x]
-            os.system('mv {} {}background{}.{}'.format(c_image, self.backgrounds_path, str(x+1), c_image[c_image.rfind('.')+1:]))
-
+            
+            if not self.files[x].startswith('background'):
+                os.system('mv {} {}background{}.{}'.format(c_image, self.backgrounds_path, str(x+1), c_image[c_image.rfind('.')+1:]))
 
 
     def resizeEvent(self, event):
