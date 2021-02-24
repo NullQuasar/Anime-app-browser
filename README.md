@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"# Anime browser" 
-
 Simple anime app browser to search anime in multiple web platforms
 =======
 *# Anime browser*
