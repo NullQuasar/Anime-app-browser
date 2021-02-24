@@ -1,0 +1,8 @@
+# Useless files and folders
+
+Inherit.txt
+FirstCode.py
+__init__.py
+Fonts/
+__pycache__/
+To-Do.txt

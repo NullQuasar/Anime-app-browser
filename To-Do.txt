@@ -1,9 +1,9 @@
-Alerta cuando no se encuentre el anime (capitulo)
+Alerta cuando no se encuentre el anime (capitulo) //
 
-Remplazar caracteres especiales como ; por espacios
+Remplazar caracteres especiales como ; por espacios //
 
-Enlazar la seleccion de fuente de texto de la iterfaz grafica con la fuente de texto de la interfaz
-
-Menu para elegir wallpapers de fondo para la interfaz
+Menu para elegir wallpapers de fondo para la interfaz //
 
 Hacer la interfaz a escala para cuando el usuario cambie el tamano de la ventana
+
+Boton para mostrar la lista de los ultimos animes a traves de anidb http api
