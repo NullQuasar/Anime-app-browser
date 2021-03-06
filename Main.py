@@ -15,9 +15,9 @@ class MainWindow(QtWidgets.QMainWindow):
      
         super(MainWindow, self).__init__()
         self.currentPath = os.getcwd().replace('\\', '/')
-        self.backgrounds_path = self.currentPath + "/AnimeSearcherImages/"
+        self.backgrounds_path = self.currentPath + "/AnimeBrowserImages/"
 
-        uic.loadUi(self.currentPath + '/AnimeSearcher.ui', self)
+        uic.loadUi(self.currentPath + '/AnimeBrowser.ui', self)
         #sys.setrecursionlimit(10000)
 
         self.anime = self.SearchInput.text()

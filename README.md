@@ -1,6 +1,6 @@
-Simple anime app browser to search anime in multiple web platforms
+Simple anime app Browser to search anime in multiple web platforms
 =======
-*# Anime browser*
+*# Anime Browser*
 
 Simple App para buscar animes en multiples plataformas en español como animeflv y animefenix, entre otras.
 
