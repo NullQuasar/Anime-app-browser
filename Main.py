@@ -131,7 +131,6 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 for p in self.checkedOps:
                     self.SearchAnime(p)
-                    print(p)
         else:
             msg = QMessageBox()
             msg.setWindowTitle('Platform!')
@@ -148,19 +147,25 @@ class MainWindow(QtWidgets.QMainWindow):
                 os.system('start ' + p)
                 print('Open in browser > ' + p)
 
+
+    def clearList(self):
+        self.urls.clear()
+        self.Results.clear()
+        self.cap = ''
+
+
+    def remove_special_chars(self):
+        self.anime = re.sub('[^A-Za-z0-9, ]+', ' ', self.anime)
+        self.anime = re.sub(' +', ' ', self.anime)
+
+
     def setQuery(self):
         print('Debug! ', self.checkedOps)
-
-        def clearList():
-            self.urls.clear()
-            self.Results.clear()
-            self.cap = ''
-
-        clearList()
+        self.clearList()
 
         self.anime = self.SearchInput.text()
-        self.anime = re.sub('[^A-Za-z0-9 ]+', ' ', self.anime)
-        self.anime = re.sub(' +', ' ', self.anime)
+        self.remove_special_chars()
+        
         print(self.anime)
             
         # Verify input
@@ -189,7 +194,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.anime = a
                     self.typeOfSearch()
                     self.openInBrowser()
-                    clearList()
+                    #self.clearList()
                     
 
             else:
