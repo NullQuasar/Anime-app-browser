@@ -171,6 +171,9 @@ color: white;</string>
       <bold>true</bold>
      </font>
     </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
     <property name="toolTip">
      <string>Type your anime episode!</string>
     </property>
@@ -426,14 +429,11 @@ color: white;</string>
        <bold>false</bold>
       </font>
      </property>
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+     <property name="toolTipDuration">
+      <number>1</number>
      </property>
      <property name="statusTip">
       <string>View results!</string>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -441,17 +441,29 @@ color: white;</string>
      <property name="styleSheet">
       <string notr="true">border: 2px solid qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255), stop:0.166 rgba(255, 255, 0, 255), stop:0.333 rgba(0, 255, 0, 255), stop:0.5 rgba(0, 255, 255, 255), stop:0.666 rgba(0, 0, 255, 255), stop:0.833 rgba(255, 0, 255, 255), stop:1 rgba(255, 0, 0, 255));</string>
      </property>
-     <property name="flow">
-      <enum>QListView::TopToBottom</enum>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::NoDragDrop</enum>
+     </property>
+     <property name="movement">
+      <enum>QListView::Static</enum>
      </property>
      <property name="isWrapping" stdset="0">
       <bool>false</bool>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Fixed</enum>
      </property>
      <property name="viewMode">
       <enum>QListView::IconMode</enum>
      </property>
      <property name="itemAlignment">
       <set>Qt::AlignHCenter</set>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QLabel" name="resultLabel">
@@ -580,7 +592,7 @@ color: rgb(77, 77, 77);</string>
      </rect>
     </property>
     <property name="autoFillBackground">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
