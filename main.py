@@ -41,7 +41,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Set background image:
         self.make_background_folder()
         self.image_index = 0
-        self.currentBackground = self.backgrounds_path + 'background5.jpg'
+        self.currentBackground = self.backgrounds_path + 'background4.jpg'
         self.set_background()
 
 
