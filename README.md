@@ -1,7 +1,9 @@
 Simple anime app Browser to search anime in multiple web platforms
 =======
-*# Anime Browser*
+Simple app para buscar animes en multiples plataformas en español como animeflv y animefenix, entre otras.
 
-Simple App para buscar animes en multiples plataformas en español como animeflv y animefenix, entre otras.
+## Uso　👇
 
-Puedes poner el episodio del anime luego del nombre del anime(debe ser especifico) para redireccion directa a la pagina
+* Puedes consultar un anime poniendo su nombre en la barra de busqueda
+* Tambien puedes insertar el numero del episodio de dicho anime que quieres ver para redireccion directa
+* Ademas puedes consultar multiples animes en una lista donde esten separados por comas
