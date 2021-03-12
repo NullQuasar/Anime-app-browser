@@ -17,7 +17,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Anime Browser</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -511,7 +511,7 @@ color: white;</string>
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border: 2px solid red;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Open in Browser</string>
