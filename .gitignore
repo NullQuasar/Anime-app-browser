@@ -1,12 +1,12 @@
 # Useless files and folders
 
+__pycache__/
 Inherit.txt
 FirstCode.py
-To-Do.txt
+to-do.txt
 __init__.py
 Fonts/
-__pycache__/
-Backgrounds-copy/
+backgrounds-copy
 get-pip.py
 .vs/
 Inherit.py
