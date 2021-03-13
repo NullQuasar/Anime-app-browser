@@ -18,7 +18,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.backgrounds_path = self.currentPath + "/AnimeBrowserImages/"
 
         uic.loadUi(self.currentPath + '/AnimeBrowser.ui', self)
-        #sys.setrecursionlimit(10000)
 
         self.anime = self.SearchInput.text()
         self.cap = ''
@@ -44,12 +43,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.currentBackground = self.backgrounds_path + 'background4.jpg'
         self.set_background()
 
-
-        # Set banner image:
-        #bannerImage = self.currentPath + '/AnimeSearcherImages/banner.jpg'
-        #self.steticImage.setStyleSheet("background-image : url(C:/Users/Usuario/Desktop/Informática/Programacion/GitHub/AnimeSearcher/AnimeSearcherImages/banner.jpg); border : 2px solid blue") 
-
-        #MainWindow.setStyleSheet("background-image: url(AnimeSearcher/background.jpg)")
         self.checkedOps = set()  
         self.openInBrowser()
 
@@ -204,7 +197,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def isEpisode(self):
-        # Determinar tipo de busqueda (consulta o capitulo)
+        # Determine type of search (query or episode)
         if len(self.cap) == 0:
             return False
         else:
