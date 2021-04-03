@@ -20,7 +20,7 @@ class MainWindow(QtWidgets.QMainWindow):
     resized = QtCore.pyqtSignal()
 
     def __init__(self):
-
+        """ Set the needed variables """
         super(MainWindow, self).__init__()
 
         # Current path variable
@@ -29,17 +29,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.resized.connect(self.resizeWindowAction)
 
-        # Useless for the current code
-        """
-        if True:
-            import threading
-            event = threading.Event()
-            event.set()
-            thread = threading.Thread(
-                target=self.variantBackground, args=(event,))
-            thread.start()
-        """
 
+    """ Qt functions for resizing events """
     def resizeEvent(self, event):
         self.resized.emit()
         return super(MainWindow, self).resizeEvent(event)
@@ -61,6 +52,7 @@ class MainWindow(QtWidgets.QMainWindow):
 """ Class with functions to scrape the websites """
 class GetAnime(MainWindow):
     def __init__(self):
+        """ Set the needed variables """
         super(GetAnime, self).__init__()
 
         # Backgrounds path
@@ -97,6 +89,7 @@ class GetAnime(MainWindow):
 
 
     def make_background_folder(self):
+        """ Make and order the default background list """
         self.files = os.listdir(self.backgrounds_path)
         # There is an error, rename files even while they are already named, and the order make the program to delete some files in the process
         images = len(self.files)
@@ -118,6 +111,7 @@ class GetAnime(MainWindow):
         self.setPalette(palette)
 
 
+    """ Add to the list the checked platforms """
     def animeflvChecked(self):
         if self.animeflvOp.isChecked():
             self.checkedOps.add('https://www3.animeflv.net')
@@ -147,6 +141,7 @@ class GetAnime(MainWindow):
 
 
     def typeOfSearch(self):
+        """ Determine the the type of search (direct episode or query) """
         if len(self.checkedOps) > 0:
             if self.is_episode():
                 for p in self.checkedOps:
@@ -166,6 +161,7 @@ class GetAnime(MainWindow):
 
     # Open links in browser
     def open_in_browser(self):
+        """ Open link/s in browser if open-in-browser is checked """
         if self.openBrowser.isChecked():
             for p in self.urls:
                 os.system('start ' + p)
@@ -173,6 +169,7 @@ class GetAnime(MainWindow):
 
 
     def set_query(self):
+        """ Set the link to search the anime """
         print('Debug! ', self.checkedOps)
 
         def clear_list():
@@ -221,6 +218,7 @@ class GetAnime(MainWindow):
 
 
     def is_episode(self):
+        """ Determine if anime is an episode """
         # Determinar tipo de busqueda (consulta o capitulo)
         if len(self.cap) == 0:
             return False
@@ -230,6 +228,7 @@ class GetAnime(MainWindow):
 
     # If the self.anime is not found it probes some common parameters like tv and hd
     def probe_parameters(self, url, p):
+        """ Probe different parameters when searching by episode """
         parameters = ['tv', 'hd', 'latino']
 
         index = url.find('-' + self.cap)
@@ -262,6 +261,7 @@ class GetAnime(MainWindow):
 
 
     def search_anime(self, platform):
+        """ Search the anime as a query """
         # query = urllib.parse.quote(query) Dont work
         query = self.anime.replace(' ', '+')
 
@@ -285,6 +285,7 @@ class GetAnime(MainWindow):
 
 
     def search_by_episode(self, platform):
+        """ Set the link to the specified episode """
         query = self.anime.replace(' ', '-').lower()
         url = platform + '/ver/' + query
 
@@ -317,6 +318,7 @@ class GetAnime(MainWindow):
 
 
     def prev_background(self):
+        """ Change to previous wallpaper in the wallpapers list """
         self.image_index -= 1
         if self.image_index <= 0:
             self.image_index = len(self.files) - 1
@@ -327,6 +329,7 @@ class GetAnime(MainWindow):
 
 
     def next_background(self):
+        """ Change to next wallpaper in the wallpapers list """
         self.image_index += 1
         if self.image_index >= len(self.files):
             self.image_index = 0
@@ -337,6 +340,7 @@ class GetAnime(MainWindow):
 
 
     def custom_background(self):
+        """ Select a background from your system """
         fname = QFileDialog.getOpenFileName(
             self, 'Open file', self.currentPath, 'Images (*.jpg *.jpeg *.png *.gif *.jfif *.bmp)')
 
@@ -348,6 +352,8 @@ class GetAnime(MainWindow):
 
 
     def eventFilter(self, obj, event):
+        """ Filter the mouse event when changing the background wallpaper """
+
         if event.type() == QtCore.QEvent.MouseButtonPress:
 
             if event.button() == QtCore.Qt.LeftButton:
