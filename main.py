@@ -27,6 +27,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.currentPath = os.getcwd().replace('\\', '/')
         uic.loadUi(self.currentPath + '/AnimeBrowser.ui', self)
 
+        # Set function in button change_bg to get mouse events
+        self.change_bg.installEventFilter(self)
+
+
+        # Backgrounds path
+        self.backgrounds_path = self.currentPath + "/AnimeBrowserImages/"
+
+        # Set background image:
+        self.make_background_folder()
+        self.image_index = 0
+        self.currentBackground = self.backgrounds_path + 'background4.jpg'
+        self.set_background()
+
         self.resized.connect(self.resizeWindowAction)
 
 
@@ -45,47 +58,6 @@ class MainWindow(QtWidgets.QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
-
-# =======================================================================================================
-
-""" Class with functions to scrape the websites """
-class GetAnime(MainWindow):
-    def __init__(self):
-        """ Set the needed variables """
-        super(GetAnime, self).__init__()
-
-        # Backgrounds path
-        self.backgrounds_path = self.currentPath + "/AnimeBrowserImages/"
-
-        # Set basic variables needed for search
-        self.anime = self.SearchInput.text()
-        self.cap = ''
-        self.urls = []
-        nums = re.findall(r'\d+', self.anime)
-        self.checkedOps = set()  # Checked websites to search
-
-        # Check if is there any number to search by episode
-        if len(nums) > 0:
-            self.cap = nums[len(nums)-1]
-
-        # Choose websites for search anime
-        self.animeflvOp.stateChanged.connect(self.animeflvChecked)
-        self.animefenixOp.stateChanged.connect(self.animefenixChecked)
-        self.tioanimeOp.stateChanged.connect(self.tioanimeChecked)
-        self.monoschinosOp.stateChanged.connect(self.monoschinosChecked)
-
-        self.searchButton.clicked.connect(self.set_query)
-        self.change_bg.installEventFilter(self)
-
-        # Set background image:
-        self.make_background_folder()
-        self.image_index = 0
-        self.currentBackground = self.backgrounds_path + 'background4.jpg'
-        self.set_background()
-
-        # Check if open-in-browser is activated
-        self.open_in_browser()
 
 
     def make_background_folder(self):
@@ -109,6 +81,110 @@ class GetAnime(MainWindow):
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(sImage))
         self.setPalette(palette)
+
+
+    # In development
+    """ def variantBackground(self, event):
+        from time import sleep
+
+        sleepTime = 60
+        path = self.currentPath + '/AnimeSearcherImages/'
+        backgrounds = os.listdir(path)
+
+        # Constantly change the background
+        while True:
+            for image in backgrounds:
+                self.currentPath = path + image
+                self.resizeWindowAction()
+                event.wait(sleepTime) """
+
+
+    def prev_background(self):
+        """ Change to previous wallpaper in the wallpapers list """
+        self.image_index -= 1
+        if self.image_index <= 0:
+            self.image_index = len(self.files) - 1
+
+        self.currentBackground = self.backgrounds_path + \
+            self.files[self.image_index]
+        self.set_background()
+
+
+    def next_background(self):
+        """ Change to next wallpaper in the wallpapers list """
+        self.image_index += 1
+        if self.image_index >= len(self.files):
+            self.image_index = 0
+
+        self.currentBackground = self.backgrounds_path + \
+            self.files[self.image_index]
+        self.set_background()
+
+
+    def custom_background(self):
+        """ Select a background from your system """
+        fname = QFileDialog.getOpenFileName(
+            self, 'Open file', self.currentPath, 'Images (*.jpg *.jpeg *.png *.gif *.jfif *.bmp)')
+
+        if os.path.isfile(fname[0]):
+            self.currentBackground = fname[0]
+            self.set_background()
+
+            print('Selected file > ', fname)
+
+
+    def eventFilter(self, obj, event):
+        """ Filter the mouse event when changing the background wallpaper """
+
+        if event.type() == QtCore.QEvent.MouseButtonPress:
+
+            if event.button() == QtCore.Qt.LeftButton:
+                print(obj.objectName(), "Left click")
+                self.prev_background()
+
+            elif event.button() == QtCore.Qt.RightButton:
+                print(obj.objectName(), "Right click")
+                self.next_background()
+
+            elif event.button() == QtCore.Qt.MiddleButton:
+                print(obj.objectName(), "Middle click")
+                self.custom_background()
+
+        self.resizeWindowAction()
+        return QtCore.QObject.event(obj, event)
+
+
+# =======================================================================================================
+
+""" Class with functions to scrape the websites """
+class GetAnime(MainWindow):
+    def __init__(self):
+        """ Set the needed variables """
+        super(GetAnime, self).__init__()
+
+        
+
+        # Set basic variables needed for search
+        self.anime = self.SearchInput.text()
+        self.cap = ''
+        self.urls = []
+        nums = re.findall(r'\d+', self.anime)
+        self.checkedOps = set()  # Checked websites to search
+
+        # Check if is there any number to search by episode
+        if len(nums) > 0:
+            self.cap = nums[len(nums)-1]
+
+        # Choose websites for search anime
+        self.animeflvOp.stateChanged.connect(self.animeflvChecked)
+        self.animefenixOp.stateChanged.connect(self.animefenixChecked)
+        self.tioanimeOp.stateChanged.connect(self.tioanimeChecked)
+        self.monoschinosOp.stateChanged.connect(self.monoschinosChecked)
+
+        self.searchButton.clicked.connect(self.set_query)
+
+        # Check if open-in-browser is activated
+        self.open_in_browser()
 
 
     """ Add to the list the checked platforms """
@@ -300,76 +376,6 @@ class GetAnime(MainWindow):
             self.urls.append(url)
             print('Added to the list.')
 
-
-    # In development
-    """ def variantBackground(self, event):
-        from time import sleep
-
-        sleepTime = 60
-        path = self.currentPath + '/AnimeSearcherImages/'
-        backgrounds = os.listdir(path)
-
-        # Constantly change the background
-        while True:
-            for image in backgrounds:
-                self.currentPath = path + image
-                self.resizeWindowAction()
-                event.wait(sleepTime) """
-
-
-    def prev_background(self):
-        """ Change to previous wallpaper in the wallpapers list """
-        self.image_index -= 1
-        if self.image_index <= 0:
-            self.image_index = len(self.files) - 1
-
-        self.currentBackground = self.backgrounds_path + \
-            self.files[self.image_index]
-        self.set_background()
-
-
-    def next_background(self):
-        """ Change to next wallpaper in the wallpapers list """
-        self.image_index += 1
-        if self.image_index >= len(self.files):
-            self.image_index = 0
-
-        self.currentBackground = self.backgrounds_path + \
-            self.files[self.image_index]
-        self.set_background()
-
-
-    def custom_background(self):
-        """ Select a background from your system """
-        fname = QFileDialog.getOpenFileName(
-            self, 'Open file', self.currentPath, 'Images (*.jpg *.jpeg *.png *.gif *.jfif *.bmp)')
-
-        if os.path.isfile(fname[0]):
-            self.currentBackground = fname[0]
-            self.set_background()
-
-            print('Selected file > ', fname)
-
-
-    def eventFilter(self, obj, event):
-        """ Filter the mouse event when changing the background wallpaper """
-
-        if event.type() == QtCore.QEvent.MouseButtonPress:
-
-            if event.button() == QtCore.Qt.LeftButton:
-                print(obj.objectName(), "Left click")
-                self.prev_background()
-
-            elif event.button() == QtCore.Qt.RightButton:
-                print(obj.objectName(), "Right click")
-                self.next_background()
-
-            elif event.button() == QtCore.Qt.MiddleButton:
-                print(obj.objectName(), "Middle click")
-                self.custom_background()
-
-        self.resizeWindowAction()
-        return QtCore.QObject.event(obj, event)
 
 
 if __name__ == '__main__':
